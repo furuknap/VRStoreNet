@@ -1,0 +1,54 @@
+﻿@model VRStore.Models.Video
+
+@{
+    ViewBag.Title = "Rent";
+}
+@section Scripts {
+    <script src="~/Scripts/Rent.js"></script>
+
+}
+<h2>Rent</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    @Html.HiddenFor(Model => Model.ID)
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            Rent for how many days?
+        </dt>
+        <dd>
+            <input name="days" id="days" type="number" value="1">
+        </dd>
+    </dl>
+    Cost: <span id="price">0</span><br />
+
+    <button id="rentButton">Rent</button>
+
+
+</div>
+<p>
+    @Html.ActionLink("Back to Front Page", "Index", "Home") 
+</p>

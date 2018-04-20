@@ -29,5 +29,10 @@ namespace VRStore.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<VRStore.Models.Video> Videos { get; set; }
+
+        public System.Data.Entity.DbSet<VRStore.Models.VideoCopy> VideoCopies { get; set; }
+        public System.Data.Entity.DbSet<UserHistory> UserHistory { get; set; }
     }
 }

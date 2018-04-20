@@ -1,0 +1,78 @@
+﻿@model VRStore.ViewModels.VideoDetailViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>
+        @Model.Title
+    </h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ReleaseDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ReleaseDate)
+        </dd>
+
+    </dl>
+    <div class="copyList container">
+        <div class="h2">Copies</div>
+        <div class="row card-header">
+            <div class="col-md-4">ID</div>
+            <div class="col-md-3">Renter</div>
+            <div class="col-md-3">Due</div>
+            <div class="col-md-2">Actions</div>
+
+        </div>
+        @foreach (var copy in Model.Copies)
+        {
+            <div class="row border border-bottom small">
+                <div class="col-md-4">@copy.ID</div>
+                @if (copy.RentedDate != null)
+                {
+                    <div class="col-md-3">@copy.RenterID</div>
+                    <div class="col-md-3">
+                        @if (((DateTime)copy.DueDate) < DateTime.UtcNow)
+                        {
+                            <span style="color: red">@copy.DueDate</span><br/>
+                            <span>Overdue @copy.DueLateRent</span>
+                        }
+                        else
+                        {
+                            <span>@copy.DueDate</span>
+
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 text-center">Available</div>
+                }
+                <div class="col-md-2">
+                    @if (copy.RentedDate != null)
+                    {<a href="@Url.Action("Create", "VideoCopies", new { videoID=Model.ID })" class="btn btn-default">Return</a>}
+                </div>
+
+            </div>
+        }
+        <a href="@Url.Action("Create", "VideoCopies", new { videoID=Model.ID })" class="btn btn-default">Add Copy</a>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
