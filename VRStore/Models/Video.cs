@@ -33,7 +33,7 @@ namespace VRStore.Models
 
         }
 
-        public List<VideoCopy> Copies { get; set; } = new List<VideoCopy>();
+        public virtual List<VideoCopy> Copies { get; set; } = new List<VideoCopy>();
     }
 
     public enum VideoAge

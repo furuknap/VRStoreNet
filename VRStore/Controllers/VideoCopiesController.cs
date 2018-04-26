@@ -11,10 +11,8 @@ using VRStore.ViewModels;
 
 namespace VRStore.Controllers
 {
-    public class VideoCopiesController : Controller
+    public class VideoCopiesController : VRStoreBaseController
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
         // GET: VideoCopies
         public ActionResult Index()
         {
@@ -24,27 +22,27 @@ namespace VRStore.Controllers
 
         public ActionResult Return(Guid id)
         {
-            VideoCopy copy = db.VideoCopies.Include(c=>c.Video).Where(c => c.RentedDate != null).SingleOrDefault();
+            VideoCopy copy = db.VideoCopies.Include(c=>c.Video).Where(c =>c.ID==id && c.RentedDate != null).SingleOrDefault();
             if (copy== null) // Copy not rented out
             {
                 return HttpNotFound();
             }
-            Video video = db.Videos.Find(copy.Video.ID);
-            if (video == null)
-            {
-                return HttpNotFound();
-            }
+
+            copy.RentedDate = null;
+            copy.RenterID = null;
+            copy.RentedDays = 0;
+            db.Entry(copy).State = EntityState.Modified;
 
             UserHistory historyEntry = db.UserHistory.Where(h => h.CopyID == copy.ID && h.ReturnedDate == null).SingleOrDefault();
             if (historyEntry == null)
             {
+                // Not rented out to this user
                 return HttpNotFound();
             }
+            historyEntry.ReturnedDate = DateTime.UtcNow;
+            db.SaveChanges();
 
-            
-
-
-            return RedirectToAction("Details", "Videos", new { id = video.ID });
+            return RedirectToAction("Details", "Videos", new { id = copy.VideoID });
             
         }
 

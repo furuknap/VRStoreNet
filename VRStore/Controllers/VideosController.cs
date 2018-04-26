@@ -125,7 +125,7 @@ namespace VRStore.Controllers
                     RentedDate = c.RentedDate,
                     DueDate = c.RentedDate != null ? ((DateTime)c.RentedDate).AddDays(c.RentedDays) : default(DateTime),
                     DueLateRent = GetLateFee(c),
-                    RenterID = c.RenterID
+                    RenterID = c.RenterID ?? new Guid()
                 }).ToList()
             };
 

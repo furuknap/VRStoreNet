@@ -4,10 +4,11 @@ namespace VRStore.Models
 {
     public class VideoCopy : Entity
     {
-        public Video Video { get; set; }
+        public virtual Video Video { get; set; }
+        public Guid VideoID { get; set; }
         public DateTime? RentedDate { get; set; }
         public int RentedDays { get; set; }
-        public Guid RenterID { get; set; }
+        public Guid? RenterID { get; set; }
 
         // I'm explicitly not adding history here to avoid complexity. 
         //

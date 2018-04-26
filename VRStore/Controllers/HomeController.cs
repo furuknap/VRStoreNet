@@ -11,9 +11,8 @@ using VRStore.ViewModels;
 
 namespace VRStore.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : VRStoreBaseController
     {
-        ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             var model = new HomeIndexViewModel();
@@ -28,6 +27,12 @@ namespace VRStore.Controllers
 
             return View(model);
         }
+
+        public ActionResult ReadMe()
+        {
+            return View();
+        }
+
 
 
     }
